@@ -20,10 +20,12 @@
 
 7、使用film.py脚本查找电影的方法
   
+    
     python3 film.py search '老炮'
 
 8、使用film.py脚本下载bt种子的方法(默认会把所有匹配到的结果都下载到本地的torrent目录,查找方法是模糊查找，如果需要精确查找，请注意自己查找关键字)
   
+   
     python3 film.py download '变形金刚'
 
 9、myql端的数据同步到本地，以csv文件存储的方法
