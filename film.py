@@ -21,23 +21,27 @@ from tqdm import tqdm
 from bt_spider import sql_helper, sync_film_db
 
 
-def search(film):
-    result = sql_helper(film, sql_type='select')
+def search(film_name):
+    result = sql_helper(film_name, sql_type='select')
     if result:
-        for film, bt_url, bt_name in result:
-            print('电影名称：', film)
+        for name, bt_url, bt_name in result:
+            print('电影名称：', name)
             print('种子名称：', bt_name)
             print('下载链接：', bt_url)
+            print()
+    else:
+        print('没有找到您要找的电影哦~')
 
 
-def torrent_download(film):
+def torrent_download(film_name):
     current_dir = os.path.dirname(os.path.abspath(__file__))
     torrent_download_dir = current_dir + '/torrent'
     '' if os.path.exists(torrent_download_dir) else os.mkdir(torrent_download_dir)
-    result = sql_helper(film.strip(), sql_type='select')
+    result = sql_helper(film_name.strip(), sql_type='select')
     if result:
-        for film, torrent_url, torrent_name in tqdm(result):
-            torrent = requests.get(torrent_url).content
+        for name, torrent_url, torrent_name in tqdm(result):
+            with requests.get(torrent_url) as req:
+                torrent = req.content
             with open(torrent_download_dir + '/' + torrent_name, 'wb') as f:
                 f.write(torrent)
     else:
@@ -50,7 +54,7 @@ if __name__ == '__main__':
         command = sys.argv[1]
         try:
             film = sys.argv[2]
-        except Exception as e:
+        except IndexError as e:
             film = ''
         if command == 'sync_db':
             sync_film_db()
