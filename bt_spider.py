@@ -75,7 +75,11 @@ class SaveFilm:
         film_name = film_name[0] if film_name else ''
         bt_name = selector.css('td:nth-child(1) > a::text').extract_first()
         if film_name and bt_name:
-            return film_name, bt_name, self.domain + bt_url[0].replace('dialog', 'download')
+            try:
+                bt_url = bt_url[0].replace('dialog', 'download')
+            except IndexError as e:
+                bt_url = ''
+            return film_name, bt_name, self.domain + bt_url
 
     async def film_to_csv(self, film):
         with open('film.csv', 'a+', newline='', encoding='utf8') as f:
@@ -106,7 +110,7 @@ def main():
     base_url = 'http://btbtt.co/forum-index-fid-1183-page-{}.htm'
     loop = asyncio.get_event_loop()
     save_film = SaveFilm()
-    to_do = [save_film(base_url, page_num, save_type='csv') for page_num in range(500, 1000)]
+    to_do = [save_film(base_url, page_num, save_type='csv') for page_num in range(1, 21)]
     future = asyncio.wait(to_do)
     loop.run_until_complete(future)
     loop.close()
