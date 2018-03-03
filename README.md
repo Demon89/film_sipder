@@ -6,7 +6,7 @@
 3、使用脚本前，请先创建数据库以及创建数据表，创建方法如下：
 
    
-    create database bt;
+    create database bt charset='utf8';
   
     create table films (id int primary key auto_increment,film varchar(250),bt_name varchar(250),bt_url varchar(250));
   
