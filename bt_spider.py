@@ -106,7 +106,7 @@ def main():
     base_url = 'http://btbtt.co/forum-index-fid-1183-page-{}.htm'
     loop = asyncio.get_event_loop()
     save_film = SaveFilm()
-    to_do = [save_film(base_url, page_num, save_type='mysql') for page_num in range(500, 1000)]
+    to_do = [save_film(base_url, page_num, save_type='csv') for page_num in range(500, 1000)]
     future = asyncio.wait(to_do)
     loop.run_until_complete(future)
     loop.close()

@@ -50,7 +50,7 @@ def torrent_download(film_name):
 
 if __name__ == '__main__':
     parameter = len(sys.argv)
-    if 1 <= parameter <= 3:
+    if 1 < parameter <= 3:
         command = sys.argv[1]
         try:
             film = sys.argv[2]
